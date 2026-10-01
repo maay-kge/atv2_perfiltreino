@@ -684,6 +684,100 @@ class _MontadorPerfilTreinoTelaState
 
             const Divider(height: 32),
 
+            // --- 6. Frequência semanal ---
+
+Text(
+  'Frequência semanal',
+  style: Theme.of(context)
+      .textTheme
+      .titleMedium,
+),
+
+const SizedBox(height: 8),
+
+Wrap(
+  spacing: 8,
+  children: List.generate(7, (index) {
+    final int dias = index + 1;
+
+    return ChoiceChip(
+      label: Text('$dias ${dias == 1 ? 'dia' : 'dias'}'),
+      selected: _frequenciaSelecionada == dias,
+      onSelected: (selecionado) {
+        setState(() {
+          _frequenciaSelecionada =
+              selecionado ? dias : null;
+        });
+
+        print(
+          '[DEBUG - ChoiceChip] '
+          'Frequência: $_frequenciaSelecionada dias',
+        );
+      },
+    );
+  }),
+),
+
+const Divider(height: 32),
+
+
+// --- 7. Notificações de água ---
+
+SwitchListTile(
+  contentPadding: EdgeInsets.zero,
+  title: const Text('Notificações de água'),
+  subtitle: const Text(
+    'Receber lembretes para beber água',
+  ),
+  value: _notificacoesAgua,
+  onChanged: (valor) {
+    setState(() {
+      _notificacoesAgua = valor;
+    });
+
+    print(
+      '[DEBUG - Switch] '
+      'Notificações de água: $valor',
+    );
+  },
+),
+
+const Divider(height: 32),
+
+
+// --- 8. Termos e condições ---
+
+CheckboxListTile(
+  contentPadding: EdgeInsets.zero,
+  title: const Text(
+    'Aceito os termos e condições',
+  ),
+  value: _termosAceitos,
+  onChanged: (valor) {
+    setState(() {
+      _termosAceitos = valor ?? false;
+    });
+
+    print(
+      '[DEBUG - Checkbox] '
+      'Termos aceitos: $_termosAceitos',
+    );
+  },
+),
+
+const SizedBox(height: 16),
+
+
+// --- 9. Gerar plano ---
+
+SizedBox(
+  width: double.infinity,
+  child: ElevatedButton(
+    onPressed: _gerarPlano,
+    child: const Text('Gerar plano'),
+  ),
+),
+
           ],
         ),
       ),
